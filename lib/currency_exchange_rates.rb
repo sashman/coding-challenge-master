@@ -1,7 +1,7 @@
 module CurrencyExchangeRates
   require 'json'
 
-  def self.get_exchange_rates(source_config)
+  def self.get_rates_by_date(source_config)
     JSON.parse(read_exchange_source(source_config))
   end
 

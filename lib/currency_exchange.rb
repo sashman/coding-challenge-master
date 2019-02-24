@@ -9,13 +9,13 @@ module CurrencyExchange
   def self.rate(date, from_currency, to_currency)
     # TODO: calculate and return rate
     base_currency = 'EUR'
-    exchange_rates =
-      CurrencyExchangeRates.get_exchange_rates({file: 'data/eurofxref-hist-90d.json'})
+    rates_by_date =
+      CurrencyExchangeRates.get_rates_by_date({file: 'data/eurofxref-hist-90d.json'})
 
     string_date = date.strftime("%F")
 
-    CurrencyExchangeValidation.validate_date(string_date, exchange_rates)
-    date_rates = exchange_rates[string_date]
+    CurrencyExchangeValidation.validate_date(string_date, rates_by_date)
+    date_rates = rates_by_date[string_date]
 
     CurrencyExchangeValidation.validate_currency(from_currency, base_currency, date_rates)
     CurrencyExchangeValidation.validate_currency(to_currency, base_currency, date_rates)
