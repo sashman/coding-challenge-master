@@ -23,12 +23,16 @@ module CurrencyExchange
     from_rate = get_rate(from_currency, base_currency, date_rates)
     to_rate = get_rate(to_currency, base_currency, date_rates)
 
-    to_rate.to_f / from_rate.to_f
+    calculate(from_rate, to_rate)
   end
 
   private
   def self.get_rate(currency, base_currency, rates)
     currency == base_currency ? 1 : rates[currency]
+  end
+
+  def self.calculate(from_rate, to_rate)
+    to_rate.to_f / from_rate.to_f
   end
 
 end
