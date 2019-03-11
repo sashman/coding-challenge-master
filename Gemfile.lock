@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    pg (1.1.4)
     power_assert (1.1.3)
     test-unit (3.3.0)
       power_assert
@@ -9,6 +10,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  pg
   test-unit
 
 BUNDLED WITH
