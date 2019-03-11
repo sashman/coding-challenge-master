@@ -14,7 +14,8 @@ class Rates
     return true if currency == @base_currency
 
     string_date = date.strftime('%F')
-    date?(date) && @daily_rates.rate_on_date?(currency, string_date)
+    @daily_rates.date?(string_date) &&
+      @daily_rates.rate_on_date?(currency, string_date)
   end
 
   def rate_on_date(currency, date)
