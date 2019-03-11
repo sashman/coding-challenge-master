@@ -8,7 +8,7 @@ module CurrencyExchange
   # Raises an exception if there is no rate for the date provided.
   def self.rate(date, from_currency, to_currency)
     # TODO: calculate and return rate
-    rates_by_date = RatesSource.get_rates_by_date(file: 'data/eurofxref-hist-90d.json')
+    rates_by_date = RatesSource.from(file: 'data/eurofxref-hist-90d.json')
     rates = Rates.new('EUR', rates_by_date)
 
     Validation.date_present?(rates, date)

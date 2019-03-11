@@ -1,7 +1,7 @@
 module RatesSource
   require 'json'
 
-  def self.get_rates_by_date(source_config)
+  def self.from(source_config)
     JSON.parse(read_exchange_source(source_config))
   end
 
