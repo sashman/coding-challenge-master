@@ -10,4 +10,11 @@ module Validation
       raise ArgumentError, "Requested currency (#{currency}) not available"
     end
   end
+
+  def self.date_present?(rates, date)
+    unless rates.date?(date)
+      raise ArgumentError, "Requested date (#{date}) not available"
+    end
+  end
+
 end

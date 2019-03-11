@@ -14,7 +14,7 @@ module CurrencyExchange
 
     rates = Rates.new('EUR', rates_by_date)
 
-    Validation.validate_date(string_date, rates_by_date)
+    Validation.date_present?(rates, date)
     date_rates = rates_by_date[string_date]
 
     Validation.validate_currency(from_currency, base_currency, date_rates)
