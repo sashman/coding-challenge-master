@@ -1,6 +1,7 @@
 module CurrencyExchange
-  require 'rates'
+  require 'rates_source'
   require 'validation'
+  require 'rates'
 
   # Return the exchange rate between from_currency and to_currency on date as a float.
   # Raises an exception if unable to calculate requested rate.
@@ -8,8 +9,10 @@ module CurrencyExchange
   def self.rate(date, from_currency, to_currency)
     # TODO: calculate and return rate
     base_currency = 'EUR'
-    rates_by_date = Rates.get_rates_by_date(file: 'data/eurofxref-hist-90d.json')
+    rates_by_date = RatesSource.get_rates_by_date(file: 'data/eurofxref-hist-90d.json')
     string_date = date.strftime('%F')
+
+    rates = Rates.new('EUR', rates_by_date)
 
     Validation.validate_date(string_date, rates_by_date)
     date_rates = rates_by_date[string_date]
@@ -17,8 +20,8 @@ module CurrencyExchange
     Validation.validate_currency(from_currency, base_currency, date_rates)
     Validation.validate_currency(to_currency, base_currency, date_rates)
 
-    from_rate = get_rate(from_currency, base_currency, date_rates)
-    to_rate = get_rate(to_currency, base_currency, date_rates)
+    from_rate = rates.rate_on_date(from_currency, date)
+    to_rate = rates.rate_on_date(to_currency, date)
 
     calculate(from_rate, to_rate)
   end

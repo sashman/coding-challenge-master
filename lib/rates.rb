@@ -1,11 +1,27 @@
-module Rates
-  require 'json'
+class Rates
 
-  def self.get_rates_by_date(source_config)
-    JSON.parse(read_exchange_source(source_config))
+  def initialize(base_currency, daily_rates)
+    @base_currency = base_currency
+    @daily_rates = daily_rates
   end
 
-  def self.read_exchange_source(source_config)
-    open(source_config[:file]).read
+  def date?(date)
+    string_date = date.strftime('%F')
+    @daily_rates.key?(string_date)
   end
+
+  def rate_on_date?(currency, date)
+    return true if currency == @base_currency
+
+    string_date = date.strftime('%F')
+    date?(date) && @daily_rates[string_date].key?(currency)
+  end
+
+  def rate_on_date(currency, date)
+    return 1 if currency == @base_currency
+
+    string_date = date.strftime('%F')
+    @daily_rates[string_date][currency]
+  end
+
 end
