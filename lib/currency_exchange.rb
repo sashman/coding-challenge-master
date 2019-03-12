@@ -14,14 +14,14 @@ module CurrencyExchange
                                       dbname: 'exchange_rates',
                                       user: 'postgres',
                                       password: 'postgres')
-    rates = Rates.new('EUR', [rates_primary, rates_fallback])
+    eur_rates = Rates.new('EUR', [rates_primary, rates_fallback])
 
-    Validation.date_present?(rates, date)
-    Validation.rate_present?(rates, from_currency, date)
-    Validation.rate_present?(rates, to_currency, date)
+    Validation.date_present?(eur_rates, date)
+    Validation.rate_present?(eur_rates, from_currency, date)
+    Validation.rate_present?(eur_rates, to_currency, date)
 
-    from_rate = rates.rate_on_date(from_currency, date)
-    to_rate = rates.rate_on_date(to_currency, date)
+    from_rate = eur_rates.rate_on_date(from_currency, date)
+    to_rate = eur_rates.rate_on_date(to_currency, date)
 
     calculate(from_rate, to_rate)
   end
