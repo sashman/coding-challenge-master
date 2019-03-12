@@ -27,6 +27,12 @@ class CurrencyExchangeTest < Test::Unit::TestCase
                  CurrencyExchange.rate(Date.new(2018, 11, 22), 'EUR', 'JPY')
   end
 
+  def test_fallback_data_source
+    correct_rate = 1.12
+    assert_equal correct_rate,
+                 CurrencyExchange.rate(Date.new(2019, 3, 12), 'EUR', 'USD')
+  end
+
   def test_missing_date_throws_exception
     assert_raise ArgumentError do
       CurrencyExchange.rate(Date.new(1018, 1, 2), 'JPY', 'EUR')

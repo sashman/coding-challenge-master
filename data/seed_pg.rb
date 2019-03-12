@@ -15,6 +15,9 @@ data.each do |date, currencies|
   end
 end
 
+extra_value = '(\'2019-03-12\', \'USD\', \'1.12\')'
+values_to_insert.push(extra_value)
+
 conn.exec("INSERT INTO
   \"public\".\"exchange_rates\" (\"date\", \"currency\", \"rate\")
   VALUES #{values_to_insert.join(',')}")

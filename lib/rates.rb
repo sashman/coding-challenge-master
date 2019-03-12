@@ -1,28 +1,30 @@
 class Rates
-
-  def initialize(base_currency, daily_rates)
+  def initialize(base_currency, rate_sources)
     @base_currency = base_currency
-    @daily_rates = daily_rates
+    @rate_sources = rate_sources
   end
 
   def date?(date)
     string_date = date.strftime('%F')
-    @daily_rates.date?(string_date)
+    @rate_sources.any? { |source| source.date?(string_date) }
   end
 
   def rate_on_date?(currency, date)
     return true if currency == @base_currency
 
     string_date = date.strftime('%F')
-    @daily_rates.date?(string_date) &&
-      @daily_rates.rate_on_date?(currency, string_date)
+    @rate_sources.any? do |source|
+      source.date?(string_date) &&
+        source.rate_on_date?(currency, string_date)
+    end
   end
 
   def rate_on_date(currency, date)
     return 1 if currency == @base_currency
 
     string_date = date.strftime('%F')
-    @daily_rates.rate_on_date(currency, string_date)
+    @rate_sources.find do |source|
+      source.rate_on_date?(currency, date)
+    end.rate_on_date(currency, string_date)
   end
-
 end
