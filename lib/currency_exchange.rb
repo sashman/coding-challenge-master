@@ -8,11 +8,12 @@ module CurrencyExchange
   # Raises an exception if there is no rate for the date provided.
   def self.rate(date, from_currency, to_currency)
     # TODO: calculate and return rate
-    # euro_rates = RatesSource.from(file: 'data/eurofxref-hist-90d.json')
-    euro_rates = RatesSource.from(host: 'localhost',
-                                  dbname: 'exchange_rates',
-                                  user: 'postgres',
-                                  password: 'postgres')
+    euro_rates = RatesSource.from(:json_file, file: 'data/eurofxref-hist-90d.json')
+    # euro_rates = RatesSource.from(:postgres,
+    #                               host: 'localhost',
+    #                               dbname: 'exchange_rates',
+    #                               user: 'postgres',
+    #                               password: 'postgres')
     rates = Rates.new('EUR', euro_rates)
 
     Validation.date_present?(rates, date)
